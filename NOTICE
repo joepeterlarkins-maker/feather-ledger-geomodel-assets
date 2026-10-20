@@ -1,0 +1,59 @@
+feather-ledger-geomodel-assets
+==============================
+
+This repository distributes a MODIFIED copy of the BirdNET+ Geomodel V3.0.4
+(Global 10K-pruned, FP16).
+
+Original work
+-------------
+  Name:      BirdNET+ Geomodel V3.0.4 Global 10K-pruned (FP16, ONNX)
+  Source:    https://github.com/birdnet-team/birdnet-live-app
+  Revision:  76f456daf10ce758e9a75d1668b30ebaf6888169
+  Path:      assets/models/BirdNET+_Geomodel_V3.0.4_Global_10K-pruned_FP16.onnx
+  Size:      13,608,653 bytes
+  SHA-256:   198adb7bcb3cf03341ffa51fbfa7b2d295e5cd900ba09183dcfdbf6d12b5c63b
+  Licence:   Apache License, Version 2.0, per the upstream MODEL_LICENSE:
+             https://github.com/birdnet-team/birdnet-live-app/blob/76f456daf10ce758e9a75d1668b30ebaf6888169/MODEL_LICENSE
+  Credit:    The BirdNET team (https://github.com/birdnet-team). The upstream
+             MODEL_LICENSE names no individual copyright holder. The upstream
+             project asks to be cited as: Kahl, S., Börner, A., Mauermann, M.,
+             Seifert, R. C., Lasseck, M., Wilhelm-Stein, T., Wood, C. M.,
+             Eibl, M., Klinck, H. (2026), "BirdNET Live app - Professional
+             bioacoustics in your pocket",
+             https://github.com/birdnet-team/birdnet-live-app
+
+The upstream licence is reproduced unchanged in the LICENSE file. At the
+revision above the upstream repository contains no separate NOTICE file.
+
+Modifications (Apache License 2.0, section 4(b))
+------------------------------------------------
+The file in this repository was changed from the original as follows:
+
+  1. Converted from ONNX to TensorFlow Lite format using onnx2tf 1.28.8 with
+     TensorFlow 2.19.0, using a fixed batch size of 1 (input [1,3],
+     output [1,9789]). Weights are stored as float16.
+  2. All 17 ONNX "Erf" operations (used in the GELU activations) were
+     replaced, before conversion, with an equivalent approximation built from
+     basic operators (Abramowitz and Stegun formula 7.1.26, using Abs, Sign,
+     Mul, Add, Div, Neg, Exp and Sub), so that the TensorFlow Lite model uses
+     built-in operators only. Constants for the approximation are stored in
+     float16, matching the precision of the original Erf inputs.
+
+Outputs therefore differ slightly from the original model; see README.md.
+
+Converted work
+--------------
+  Name:      BirdNET+_Geomodel_V3.0.4_Global_10K-pruned_FP16.tflite
+  Size:      13,406,660 bytes
+  SHA-256:   367f1005e4f31e34ecd5a2985435b3eb0fb9dc10c864e6f93b8cecb5873756cb
+  Converted by: the Feather Ledger project (unofficial)
+  Tooling:   tools/geo-conversion/ (commit f6d7ec8), currently in a private
+             repository.
+
+Disclaimer
+----------
+This is an unofficial conversion. It has not been produced, reviewed or
+endorsed by the BirdNET team or its institutions. No trademark licence is
+granted; the name "BirdNET" is used only to identify the upstream source.
+Provided "AS IS", without warranties or conditions of any kind. The BirdNET
+audio model is a separate work under a different licence and is not included.
